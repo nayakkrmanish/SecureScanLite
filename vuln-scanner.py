@@ -15,7 +15,8 @@ import ssl
 import re
 from colorama import Fore, Style, init
 
-init(autoreset=True)  # colorama init
+# initial welcoming
+init(autoreset=True)
 
 def print_banner():
     print(Fore.CYAN + """
@@ -25,12 +26,14 @@ def print_banner():
 ╚════════════════════════════════════════════╝
 """)
 
+#process begings
 def check_https(site_url):
     if site_url.startswith("https://"):
         print("🔒 HTTPS is enabled.\n")
     else:
         print("⚠️ HTTPS is NOT enabled. Use HTTPS for secure communication.\n")
 
+#redirection checking for https and http
 def check_redirect_to_https(site_url):
     try:
         if site_url.startswith("http://"):
@@ -43,6 +46,7 @@ def check_redirect_to_https(site_url):
     except:
         print("⚠️ Unable to check redirection.\n")
 
+#ssl certificate check
 def check_ssl_certificate(site_url):
     hostname = site_url.replace("https://", "").replace("http://", "").split("/")[0]
     try:
@@ -54,6 +58,7 @@ def check_ssl_certificate(site_url):
     except Exception as e:
         print(f"❌ SSL certificate check failed: {e}\n")
 
+#header vertification
 def check_security_headers(site_url):
     try:
         res = requests.get(site_url)
@@ -81,6 +86,7 @@ def check_security_headers(site_url):
     except Exception as err:
         print(f"❌ Error fetching headers: {err}\n")
 
+#cookies security presence
 def check_cookies_security(site_url):
     try:
         res = requests.get(site_url)
@@ -101,6 +107,7 @@ def check_cookies_security(site_url):
     except:
         print("⚠️ Could not analyze cookies.\n")
 
+#presence of any suspicious scripts
 def check_suspicious_scripts(site_url):
     try:
         res = requests.get(site_url)
@@ -116,6 +123,7 @@ def check_suspicious_scripts(site_url):
     except:
         print("⚠️ Could not scan scripts.\n")
 
+#ending
 if __name__ == "__main__":
     print_banner()
     url = input("🌐 Enter the website URL (with http:// or https://): ").strip()
